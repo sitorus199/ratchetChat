@@ -82,7 +82,7 @@ $user_data = $user_object->get_user_all_data();
 <body>
 	<div class="container">
 		<br />
-        <h3 class="text-center">Realtime One to One Chat App using Ratchet WebSockets with PHP Mysql - Online Offline Status - 8</h3>
+        <h3 class="text-center">Group Cha</h3>
         <br />
 		<div class="row">
 			
@@ -222,13 +222,13 @@ $user_data = $user_object->get_user_all_data();
 
 		    if(data.from == 'Me')
 		    {
-		    	row_class = 'row justify-content-start';
-		    	background_class = 'text-dark alert-light';
+                row_class = 'row justify-content-end';
+                background_class = 'alert-info';
 		    }
 		    else
 		    {
-		    	row_class = 'row justify-content-end';
-		    	background_class = 'alert-success';
+                row_class = 'row justify-content-start';
+                background_class = 'text-dark alert-light';
 		    }
 
 		    var html_data = "<div class='"+row_class+"'><div class='col-sm-10'><div class='shadow-sm alert "+background_class+"'><b>"+data.from+" - </b>"+data.msg+"<br /><div class='text-right'><small><i>"+data.dt+"</i></small></div></div></div></div>";

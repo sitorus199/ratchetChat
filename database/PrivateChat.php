@@ -11,6 +11,7 @@ class PrivateChat
 	private $timestamp;
 	private $status;
 	protected $connect;
+	public $currentDate;
 
 	public function __construct()
 	{
@@ -107,10 +108,11 @@ class PrivateChat
 
 	function save_chat()
 	{
+	    $currentDate = new DateTimeZone('Asia/Bangkok');
 		$query = "
 		INSERT INTO chat_message 
-			(to_user_id, from_user_id, chat_message, timestamp, status) 
-			VALUES (:to_user_id, :from_user_id, :chat_message, :timestamp, :status)
+			(to_user_id, from_user_id, chat_message, status) 
+			VALUES (:to_user_id, :from_user_id, :chat_message, :status)
 		";
 
 		$statement = $this->connect->prepare($query);
@@ -121,7 +123,7 @@ class PrivateChat
 
 		$statement->bindParam(':chat_message', $this->chat_message);
 
-		$statement->bindParam(':timestamp', $this->timestamp);
+//		$statement->bindParam(':timestamp', $currentDate);
 
 		$statement->bindParam(':status', $this->status);
 
