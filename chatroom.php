@@ -1,10 +1,10 @@
 <?php 
 session_start();
 
-//if(!isset($_SESSION['user_data']))
-//{
-//	header('location:index.php');
-//}
+if(!isset($_SESSION['user_data']))
+{
+	header('location:index.php');
+}
 
 require('database/ChatUser.php');
 
@@ -74,7 +74,7 @@ $user_data = $user_object->get_user_all_data();
 		{
 			height: 650px;
 			overflow-y: auto;
-			background-color:#e6e6e6;
+			background-color: grey;
 		}
 
 	</style>
@@ -94,6 +94,7 @@ $user_data = $user_object->get_user_all_data();
 								<h3>Chat Room</h3>
 							</div>
 							<div class="col col-sm-6 text-right">
+                                <a href="logout.php" class="btn btn-danger btn-sm">Logout</a>
 								<a href="privatechat.php" class="btn btn-success btn-sm">Private Chat</a>
 							</div>
 						</div>
@@ -105,14 +106,14 @@ $user_data = $user_object->get_user_all_data();
 						if(isset($_SESSION['user_data'][$chat['userid']]))
 						{
 							$from = 'Me';
-							$row_class = 'row justify-content-start';
-							$background_class = 'text-dark alert-light';
+							$row_class = 'row justify-content-end';
+                            $background_class = 'alert-info';
 						}
 						else
 						{
 							$from = $chat['user_name'];
-							$row_class = 'row justify-content-end';
-							$background_class = 'alert-success';
+							$row_class = 'row justify-content-start';
+                            $background_class = 'text-dark alert-light';
 						}
 
 						echo '
