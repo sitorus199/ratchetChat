@@ -18,13 +18,14 @@ require('database/ChatRooms.php');
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Chat application in php using web scocket programming</title>
+	<title>Private Chat</title>
 	<!-- Bootstrap core CSS -->
     <link href="vendor-front/bootstrap/bootstrap.min.css" rel="stylesheet">
 
     <link href="vendor-front/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" type="text/css" href="vendor-front/parsley/parsley.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/bubbleChat.css"/>
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor-front/jquery/jquery.min.js"></script>
@@ -103,6 +104,7 @@ require('database/ChatRooms.php');
 					<h3 class="mt-2"><?php echo $value['name']; ?></h3>
 					<a href="profile.php" class="btn btn-secondary mt-2 mb-2">Edit</a>
 					<input type="button" class="btn btn-primary mt-2 mb-2" id="logout" name="logout" value="Logout" />
+                    <a href="chatroom.php" class="btn btn-success btn-sm">Group Chat</a>&nbsp;&nbsp;&nbsp;
 				</div>
 				<?php
 				}
@@ -156,10 +158,10 @@ require('database/ChatRooms.php');
 					?>
 				</div>
 			</div>
-			
+
 			<div class="col-lg-9 col-md-8 col-sm-7">
 				<br />
-		        <h3 class="text-center">Realtime One to One Chat App using Ratchet WebSockets with PHP Mysql - Online Offline Status - 8</h3>
+		        <h3 class="text-center">Private Chat</h3>
 		        <hr />
 		        <br />
 		        <div id="chat_area"></div>
@@ -167,8 +169,93 @@ require('database/ChatRooms.php');
 			
 		</div>
 	</div>
+
+    <button class="open-button" onclick="openForm()">Chat</button>
+
+    <div class="chat-popup" id="myForm" style="background-color: white">
+        <button type="button" class="btn cancel" onclick="closeForm()" style="float: right">Close</button>
+        <h1>ChatRoom</h1>
+
+        <div class="card">
+            <div class="card-body" id="messages_area">
+                <?php
+
+				$user_object = new ChatUser;
+
+				$user_object->setUserId($login_user_id);
+
+				$user_data = $user_object->get_user_all_data_with_status_count();
+
+				?>
+                <div class="list-group" style=" max-height: 100vh; margin-bottom: 10px; overflow-y:scroll; -webkit-overflow-scrolling: touch;">
+                    <?php
+
+                    foreach($user_data as $key => $user)
+                    {
+                        $icon = '<i class="fa fa-circle text-danger"></i>';
+
+                        if($user['user_login_status'] == 'Login')
+                        {
+                            $icon = '<i class="fa fa-circle text-success"></i>';
+                        }
+
+                        if($user['user_id'] != $login_user_id)
+                        {
+                            if($user['count_status'] > 0)
+                            {
+                                $total_unread_message = '<span class="badge badge-danger badge-pill">' . $user['count_status'] . '</span>';
+                            }
+                            else
+                            {
+                                $total_unread_message = '';
+                            }
+
+                            echo "
+							<a class='list-group-item list-group-item-action select_user' style='cursor:pointer' data-userid = '".$user['user_id']."'>
+								<img src='".$user["user_profile"]."' class='img-fluid rounded-circle img-thumbnail' width='50' />
+								<span class='ml-1'>
+									<strong>
+										<span id='list_user_name_".$user["user_id"]."'>".$user['user_name']."</span>
+										<span id='userid_".$user['user_id']."'>".$total_unread_message."</span>
+									</strong>
+								</span>
+								<span class='mt-2 float-right' id='userstatus_".$user['user_id']."'>".$icon."</span>
+							</a>
+							";
+                        }
+                    }
+
+
+                    ?>
+                </div>
+            </div>
+
+
+            <div class="col-lg-9 col-md-8 col-sm-7">
+                <br />
+                <h3 class="text-center">Private Chat</h3>
+                <hr />
+                <br />
+                <div id="chat_area"></div>
+            </div>
+
+        </div>
+
+        <!--            <textarea placeholder="Type message.." name="msg" required></textarea>-->
+
+        <!--            <button type="submit" class="btn">Send</button>-->
+    </div>
 </body>
 <script type="text/javascript">
+
+    function openForm() {
+        document.getElementById("myForm").style.display = "block";
+    }
+
+    function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+    }
+
 	$(document).ready(function(){
 
 		var receiver_userid = '';
@@ -261,10 +348,9 @@ require('database/ChatRooms.php');
 				<div class="card-header">
 					<div class="row">
 						<div class="col col-sm-6">
-							<b>Chat with <span class="text-danger" id="chat_user_name">`+user_name+`</span></b>
+							<b><span class="text-danger" id="chat_user_name">`+user_name+`</span></b>
 						</div>
 						<div class="col col-sm-6 text-right">
-							<a href="chatroom.php" class="btn btn-success btn-sm">Group Chat</a>&nbsp;&nbsp;&nbsp;
 							<button type="button" class="close" id="close_chat_area" data-dismiss="alert" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
