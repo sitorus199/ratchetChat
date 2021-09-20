@@ -22,7 +22,7 @@ if(isset($_GET['code']))
         {
             $_SESSION['success_message'] = 'Your Email Successfully verify, now you can login into this chat Application';
 
-            header('location:index.php');
+            header('location:login.php');
         }
         else
         {

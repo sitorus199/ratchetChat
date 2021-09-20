@@ -4,7 +4,7 @@ session_start();
 
 if(!isset($_SESSION['user_data']))
 {
-    header('location:index.php');
+    header('location:login.php');
 }
 
 require('database/ChatUser.php');

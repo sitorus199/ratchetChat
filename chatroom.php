@@ -3,7 +3,7 @@ session_start();
 
 if(!isset($_SESSION['user_data']))
 {
-	header('location:index.php');
+	header('location:login.php');
 }
 
 require('database/ChatUser.php');
@@ -325,7 +325,7 @@ $user_data = $user_object->get_user_all_data();
 					if(response.status == 1)
 					{
 						conn.close();
-						location = 'index.php';
+						location = 'login.php';
 					}
 				}
 			})
