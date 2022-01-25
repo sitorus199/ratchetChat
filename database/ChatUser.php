@@ -398,6 +398,7 @@ class ChatUser
 
 	function get_user_id_from_token()
 	{
+		
 		$query = "
 		SELECT user_id FROM chat_user_table 
 		WHERE user_token = :user_token

@@ -230,7 +230,7 @@ require('database/ChatRooms.php');
 
 		var receiver_userid = '';
 
-		var conn = new WebSocket('ws://localhost:8080?token=<?php echo $token; ?>');
+		var conn = new WebSocket('ws://localhost:8081?token=<?php echo $token; ?>');
 
 		conn.onopen = function(event)
 		{

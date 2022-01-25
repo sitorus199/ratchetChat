@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-if(!isset($_SESSION['user_data']))
+if(!isset($_SESSION['user_data'])) 
 {
 	header('location:login.php');
 }
@@ -250,7 +250,7 @@ $user_data = $user_object->get_user_all_data();
 	
 	$(document).ready(function(){
 
-		var conn = new WebSocket('ws://localhost:8080');
+		var conn = new WebSocket('ws://localhost:8081');
 		conn.onopen = function(e) {
 		    console.log("Connection established!");
 		};
